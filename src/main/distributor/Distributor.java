@@ -10,6 +10,7 @@ public class Distributor extends Thread{
         if(name.length()>0){
             this.name = name;
         }
+        this.warehouse = warehouse;
     }
 
     @Override

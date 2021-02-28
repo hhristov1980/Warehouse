@@ -1,6 +1,5 @@
 package main.shop;
 
-import main.client.Client;
 import main.products.Product;
 import main.warehouse.Warehouse;
 
@@ -47,10 +46,6 @@ public class Shop extends Warehouse implements Runnable {
     @Override
     protected synchronized ArrayList<String> listDeficitProducts() {
         return super.listDeficitProducts();
-    }
-
-    public synchronized void sellProducts(String name){
-
     }
 
 }

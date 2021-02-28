@@ -54,6 +54,7 @@ public class Warehouse {
         }
         else {
             supplyDeficitProducts(deficitProducts);
+            System.out.println("Deficit goods have been delivered!");
             notifyAll();
         }
     }
@@ -70,15 +71,18 @@ public class Warehouse {
                             e.printStackTrace();
                         }
                     }
-                    for(int i = 0; i<numberOfProductsToDeliver; i++){
-                        try {
-                            productsToDeliver.add(kind.getValue().take());
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    else{
+                        for(int i = 0; i<numberOfProductsToDeliver; i++){
+                            try {
+                                productsToDeliver.add(kind.getValue().take());
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
+                        System.out.println("Delivered "+numberOfProductsToDeliver+" of "+name);
+                        notifyAll();
                     }
-                    System.out.println("Delivered "+productsToDeliver.size()+" of "+name);
-                    notifyAll();
+
                 }
             }
         }
@@ -89,7 +93,7 @@ public class Warehouse {
         ArrayList<String> listOfDeficitProducts = new ArrayList<>();
         for(Map.Entry<Product.ProductType,ConcurrentSkipListMap<String, BlockingQueue<Product>>> type: storage.entrySet()){
             for(Map.Entry<String, BlockingQueue<Product>> kind: type.getValue().entrySet()){
-                if(kind.getValue().size()<=5){
+                if(kind.getValue().size()<=MIN_QUANTITY){
                     listOfDeficitProducts.add(kind.getKey());
                 }
             }
